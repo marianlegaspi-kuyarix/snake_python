@@ -1,2 +1,1 @@
-print("ang hirap mo ipush")
-print("nagana na ba")
+print("finally configured, gonna start writing soon")
