@@ -13,6 +13,10 @@ game_window = tkinter.Tk()
 game_window.title("Snake")
 game_window.resizable(False, False)
 
+canvas = tkinter.Canvas(game_window, bg = "magenta", width = WINDOW_WIDTH, height = WINDOW_HEIGHT, borderwidth = 0, highlightthickness = 0)
+canvas.pack()
+game_window.update
+
 game_window.mainloop()
 
 
