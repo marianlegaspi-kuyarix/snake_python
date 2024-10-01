@@ -1,0 +1,1 @@
+print("ang hirap mo ipush")
