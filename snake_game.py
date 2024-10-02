@@ -45,16 +45,16 @@ def change_direction(e): #e = event
     #print(e.keysym)
     global snake_vel_x, snake_vel_y
 
-    if (e.keysym == "W"):
+    if (e.keysym == "Up" and snake_vel_y != 1):
         snake_vel_x = 0
         snake_vel_y = -1
-    elif (e.keysym == "Down"):
+    elif (e.keysym == "Down" and snake_vel_y != -1):
         snake_vel_x = 0
         snake_vel_y = 1
-    elif (e.keysym == "Left"):
+    elif (e.keysym == "Left" and snake_vel_x != 1):
         snake_vel_x = -1
         snake_vel_y = 0
-    elif (e.keysym == "Right"):
+    elif (e.keysym == "Right"  and snake_vel_x != -1):
         snake_vel_x = 1
         snake_vel_y = 0
             
