@@ -40,13 +40,15 @@ snake_food =Tile(10* TILE_SIZE, 10*TILE_SIZE)
 snake_body = [] #multiple snake tiles
 snake_vel_x = 0
 snake_vel_y = 0
+game_over = False
 
 #control binds
 def change_direction(e): #e = event
     #print(e)
-    #print(e.keysym)
-
-    global snake_vel_x, snake_vel_y
+    #print(e.keysym)    
+    global snake_vel_x, snake_vel_y, game_over
+    if (game_over):
+        return
 
     if (e.keysym == "Up" and snake_vel_y != 1):
         snake_vel_x = 0
@@ -62,8 +64,19 @@ def change_direction(e): #e = event
         snake_vel_y = 0
             
 def move():
-    global snake, snake_food, snake_body
-        
+    global snake, snake_food, snake_body, game_over
+    if (game_over):
+        return
+    
+    if (snake.x < 0 or snake.x >= WINDOW_WIDTH or snake.y < 0 or snake.y >= WINDOW_HEIGHT):
+        game_over = True
+        return
+    
+    for tile in snake_body:
+        if (snake.x == tile.x and snake.y == tile.y):
+            game_over = True
+            return
+            
     #collision of the snake and the food
     if (snake.x == snake_food.x and snake.y == snake_food.y):
         snake_body.append(Tile(snake_food.x, snake_food.y))
