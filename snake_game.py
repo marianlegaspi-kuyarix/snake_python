@@ -45,6 +45,7 @@ snake_vel_y = 0
 def change_direction(e): #e = event
     #print(e)
     #print(e.keysym)
+
     global snake_vel_x, snake_vel_y
 
     if (e.keysym == "Up" and snake_vel_y != 1):
@@ -61,8 +62,8 @@ def change_direction(e): #e = event
         snake_vel_y = 0
             
 def move():
-    global snake
-
+    global snake, snake_food, snake_body
+        
     #collision of the snake and the food
     if (snake.x == snake_food.x and snake.y == snake_food.y):
         snake_body.append(Tile(snake_food.x, snake_food.y))
@@ -70,7 +71,7 @@ def move():
         snake_food.y = random.randint(0, ROWS-1) * TILE_SIZE
 
     #update the snake body
-    for i in range(len(snake_body)-1, -1):
+    for i in range(len(snake_body)-1, -1, -1):
         tile = snake_body[i]
         if (i == 0):
             tile.x = snake.x
@@ -84,7 +85,7 @@ def move():
     snake.y += snake_vel_y * TILE_SIZE
 
 def draw():
-    global snake
+    global snake, snake_food, snake_body, game_over
     move()
 
     canvas.delete("all")
@@ -104,5 +105,3 @@ draw()
 
 game_window.bind("<KeyRelease>", change_direction)
 game_window.mainloop()
-
-
