@@ -37,9 +37,11 @@ game_window.geometry(f"{window_width}x{window_height}+{window_x}+{window_y}")
 #initialize the game
 snake = Tile(5* TILE_SIZE, 5*TILE_SIZE) #single tile for the snake's head
 snake_food =Tile(10* TILE_SIZE, 10*TILE_SIZE) 
+snake_body = [] #multiple snake tiles
 snake_vel_x = 0
 snake_vel_y = 0
 
+#control binds
 def change_direction(e): #e = event
     #print(e)
     #print(e.keysym)
@@ -61,6 +63,13 @@ def change_direction(e): #e = event
 def move():
     global snake
 
+    #collision of the snake and the food
+    if (snake.x == snake_food.x and snake.y == snake_food.y):
+        snake_body.append(Tile(snake_food.x, snake_food.y))
+        snake_food.x = random.randint(0, COLS-1) * TILE_SIZE
+        snake_food.y = random.randint(0, ROWS-1) * TILE_SIZE
+
+
     snake.x += snake_vel_x * TILE_SIZE
     snake.y += snake_vel_y * TILE_SIZE
 
@@ -75,6 +84,9 @@ def draw():
 
     #draw the snake
     canvas.create_rectangle(snake.x, snake.y, snake.x + TILE_SIZE, snake.y + TILE_SIZE, fill = "cyan")
+
+    for tile in snake_body:
+        canvas.create_rectangle(tile.x, tile.y, tile.x + TILE_SIZE, tile.y + TILE_SIZE, fill = "cyan")
 
     game_window.after(100, draw) #100ms = 1/10 second, 10 frames/second
 
