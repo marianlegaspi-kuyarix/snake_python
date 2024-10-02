@@ -18,8 +18,8 @@ game_window = tkinter.Tk()
 game_window.title("Snake")
 game_window.resizable(False, False)
 
-canvas = tkinter.Canvas(game_window, bg = "magenta", width = WINDOW_WIDTH, height = WINDOW_HEIGHT, borderwidth = 0, highlightthickness = 0)
-canvas.pack()
+snake_stage = tkinter.Canvas(game_window, bg = "magenta", width = WINDOW_WIDTH, height = WINDOW_HEIGHT, borderwidth = 0, highlightthickness = 0)
+snake_stage.pack()
 game_window.update()
 
 #center the game window
@@ -103,21 +103,21 @@ def draw():
     global snake, snake_food, snake_body, game_over, game_score
     move()
 
-    canvas.delete("all")
+    snake_stage.delete("all")
 
     #draw the snake's food
-    canvas.create_rectangle(snake_food.x, snake_food.y, snake_food.x + TILE_SIZE, snake_food.y + TILE_SIZE, fill = "yellow")
+    snake_stage.create_rectangle(snake_food.x, snake_food.y, snake_food.x + TILE_SIZE, snake_food.y + TILE_SIZE, fill = "yellow")
 
     #draw the snake
-    canvas.create_rectangle(snake.x, snake.y, snake.x + TILE_SIZE, snake.y + TILE_SIZE, fill = "cyan")
+    snake_stage.create_rectangle(snake.x, snake.y, snake.x + TILE_SIZE, snake.y + TILE_SIZE, fill = "cyan")
 
     for tile in snake_body:
-        canvas.create_rectangle(tile.x, tile.y, tile.x + TILE_SIZE, tile.y + TILE_SIZE, fill = "cyan")
+        snake_stage.create_rectangle(tile.x, tile.y, tile.x + TILE_SIZE, tile.y + TILE_SIZE, fill = "cyan")
 
     if (game_over):
-        canvas.create_text(WINDOW_WIDTH/2, WINDOW_HEIGHT/2, font = ('Helvetica','30','bold'), text = f"GAME OVER: {game_score}", fill = "black" )
+        snake_stage.create_text(WINDOW_WIDTH/2, WINDOW_HEIGHT/2, font = ('Helvetica','30','bold'), text = f"GAME OVER: {game_score}", fill = "black" )
     else:
-        canvas.create_text(30, 20, font = "Arial 10", text = f"Score: {game_score}", fill = "black")
+        snake_stage.create_text(30, 20, font = "Arial 10", text = f"Score: {game_score}", fill = "black")
 
     game_window.after(100, draw) #100ms = 1/10 second, 10 frames/second
 
