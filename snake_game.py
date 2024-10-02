@@ -45,7 +45,7 @@ def change_direction(e): #e = event
     #print(e.keysym)
     global snake_vel_x, snake_vel_y
 
-    if (e.keysym == "Up"):
+    if (e.keysym == "W"):
         snake_vel_x = 0
         snake_vel_y = -1
     elif (e.keysym == "Down"):
@@ -68,11 +68,13 @@ def draw():
     global snake
     move()
 
-    #draw the snake
-    canvas.create_rectangle(snake.x, snake.y, snake.x + TILE_SIZE, snake.y + TILE_SIZE, fill = "cyan")
+    canvas.delete("all")
 
     #draw the snake's food
     canvas.create_rectangle(snake_food.x, snake_food.y, snake_food.x + TILE_SIZE, snake_food.y + TILE_SIZE, fill = "yellow")
+
+    #draw the snake
+    canvas.create_rectangle(snake.x, snake.y, snake.x + TILE_SIZE, snake.y + TILE_SIZE, fill = "cyan")
 
     game_window.after(100, draw) #100ms = 1/10 second, 10 frames/second
 
