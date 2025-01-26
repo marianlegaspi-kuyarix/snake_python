@@ -157,7 +157,7 @@ def draw():
     
     if (game_over):
         snake_stage.create_text(WINDOW_WIDTH/2, WINDOW_HEIGHT/2, font = ('Helvetica','30','bold'), text = f"GAME OVER: {game_score}", fill = "black" )
-        game_window.after(1000, lambda: game_menu.pack())
+        game_window.after(2000, lambda: show_game_menu())
         return
 
     move()
@@ -177,6 +177,12 @@ def draw():
         snake_stage.create_text(30, 20, font = "Arial 10", text = f"Score: {game_score}", fill = "black")
 
     game_window.after(100, draw) #100ms = 1/10 second, 10 frames/second
+
+def show_game_menu():
+    snake_stage.pack_forget()
+    game_menu.pack()
+    game_window.update()
+    center_window()
 
 game_window.bind("<KeyRelease>", change_direction)
 game_window.bind("<p>",pause_toggle)
