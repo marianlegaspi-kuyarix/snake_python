@@ -19,20 +19,22 @@ game_window = tkinter.Tk()
 game_window.title("Snake")
 game_window.resizable(False, False)
 
+game_window.geometry(f"{WINDOW_WIDTH}x{WINDOW_HEIGHT}")
+
 snake_stage = tkinter.Canvas(game_window, bg = "magenta", width = WINDOW_WIDTH, height = WINDOW_HEIGHT, borderwidth = 0, highlightthickness = 0)
-game_window.update()
 
 #center the game window
-window_width = game_window.winfo_width()
-window_height = game_window.winfo_height()
-screen_width = game_window.winfo_screenwidth()
-screen_height = game_window.winfo_screenheight()
+def center_window():
+    window_width = game_window.winfo_width()
+    window_height = game_window.winfo_height()
+    screen_width = game_window.winfo_screenwidth()
+    screen_height = game_window.winfo_screenheight()
 
-window_x = int((screen_width/2) - (window_width/2))
-window_y = int((screen_height/2) - (window_height/2))
+    window_x = int((screen_width/2) - (window_width/2))
+    window_y = int((screen_height/2) - (window_height/2))
 
-#format "(w)x(h)+h+x+y"t
-game_window.geometry(f"{window_width}x{window_height}+{window_x}+{window_y}")
+    #format "(w)x(h)+h+x+y"t
+    game_window.geometry(f"{window_width}x{window_height}+{window_x}+{window_y}")
 
 #initialize the game
 snake = Tile(5* TILE_SIZE, 5*TILE_SIZE) #single tile for the snake's head
@@ -47,6 +49,12 @@ game_score = 0
 game_paused = False
 
 #game menu
+
+game_menu = tkinter.Frame(game_window)
+
+menu_title = tkinter.Label(game_menu, text="Snake Game", font=("Helvetica", 30, "bold"))
+menu_title.pack(pady=20)
+
 def game_start():
     global game_over, game_paused, game_score, snake, snake_food, snake_body, snake_vel_x, snake_vel_y
     snake = Tile(5* TILE_SIZE, 5*TILE_SIZE) #single tile for the snake's head
@@ -59,23 +67,22 @@ def game_start():
     game_paused = False
 
     game_menu.pack_forget()
-    snake_stage.pack()
-
+    snake_stage.pack(fill="both", expand=True)
+    
+    game_window.update()
+    center_window()
+    
     draw()
 
 def game_quit():
     game_window.quit()
-
-game_menu = tkinter.Frame(game_window)
-
-menu_title = tkinter.Label(game_menu, text="Snake Game", font=("Helvetica", 30, "bold"))
-menu_title.pack(pady=20)
 
 play_button = tkinter.Button(game_menu, text="Play", font=("Helvetica", 20), command=game_start)
 play_button.pack(pady=10)
 
 quit_button = tkinter.Button(game_menu, text="Quit", font=("Helvetica", 20), command=game_quit)
 quit_button.pack()
+
 
 game_menu.pack()
 
