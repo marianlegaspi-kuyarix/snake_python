@@ -111,10 +111,12 @@ def move():
 def draw():
     global snake, snake_food, snake_body, game_over, game_score
     
-    if not game_paused:
-        move()
-    else:
-        snake_stage.create_text(WINDOW_WIDTH/2, WINDOW_HEIGHT/2, font = ('Helvetica','30','bold'), text="PAUSED", fill="black")
+    if game_paused:
+        snake_stage.create_text(WINDOW_WIDTH/2, WINDOW_HEIGHT/2, font = ('Helvetica','30','bold'), text = "PAUSED", fill = "black")
+        game_window.after(100, draw)
+        return
+
+    move()
 
     snake_stage.delete("all")
 
