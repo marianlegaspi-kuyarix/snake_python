@@ -14,6 +14,9 @@ class Tile:
         self.x = x
         self.y = y
 
+#game paused feature
+game_paused = False
+
 #game window 
 game_window = tkinter.Tk()
 game_window.title("Snake")
