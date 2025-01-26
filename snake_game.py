@@ -3,7 +3,7 @@ import tkinter
 import random
 
 ROWS = 25
-COLS = 45
+COLS = 25
 TILE_SIZE = 25
 
 WINDOW_WIDTH = TILE_SIZE * COLS
@@ -49,7 +49,6 @@ game_score = 0
 game_paused = False
 
 #game menu
-
 game_menu = tkinter.Frame(game_window)
 
 menu_title = tkinter.Label(game_menu, text="Snake Game", font=("Helvetica", 30, "bold"))
@@ -85,6 +84,8 @@ quit_button.pack()
 
 
 game_menu.pack()
+game_window.update()
+center_window()
 
 def pause_toggle(e):
     global game_paused
