@@ -1,3 +1,4 @@
+#starting the modification of the program
 import tkinter 
 import random
 
