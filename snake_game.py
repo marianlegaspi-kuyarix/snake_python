@@ -3,7 +3,7 @@ import tkinter
 import random
 
 ROWS = 25
-COLS = 25
+COLS = 45
 TILE_SIZE = 25
 
 WINDOW_WIDTH = TILE_SIZE * COLS
@@ -16,6 +16,11 @@ class Tile:
 
 #game paused feature
 game_paused = False
+
+def pause_toggle(e):
+    global game_paused
+    game_paused = not game_paused
+
 
 #game window 
 game_window = tkinter.Tk()
@@ -105,7 +110,11 @@ def move():
 
 def draw():
     global snake, snake_food, snake_body, game_over, game_score
-    move()
+    
+    if not game_paused:
+        move()
+    else:
+        snake_stage.create_text(WINDOW_WIDTH/2, WINDOW_HEIGHT/2, font = ('Helvetica','30','bold'), text="PAUSED", fill="black")
 
     snake_stage.delete("all")
 
@@ -128,4 +137,5 @@ def draw():
 draw()    
 
 game_window.bind("<KeyRelease>", change_direction)
+game_window.bind("<p>",pause_toggle)
 game_window.mainloop()
