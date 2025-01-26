@@ -13,27 +13,6 @@ class Tile:
     def __init__(self, x, y):
         self.x = x
         self.y = y
-#game menu
-def game_start():
-    global game_over, game_paused, game_score, snake, snake_food, snake_body, snake_vel_x, snake_vel_y
-    game_over = False
-    game_paused = False
-    game_score = 0
-    snake = Tile(5* TILE_SIZE, 5*TILE_SIZE) #single tile for the snake's head
-    snake_food =Tile(10* TILE_SIZE, 10*TILE_SIZE) 
-    snake_body = [] #multiple snake tiles
-    snake_vel_x = 0
-    snake_vel_y = 0 
-
-    game_window.withdraw
-    game_window.deiconify
-    draw()
-
-def game_quit():
-    game_window.quit
-
-
-
 
 #game window 
 game_window = tkinter.Tk()
@@ -56,6 +35,9 @@ window_y = int((screen_height/2) - (window_height/2))
 #format "(w)x(h)+h+x+y"t
 game_window.geometry(f"{window_width}x{window_height}+{window_x}+{window_y}")
 
+#game menu
+game_menu = tkinter.Frame(game_window)
+
 #initialize the game
 snake = Tile(5* TILE_SIZE, 5*TILE_SIZE) #single tile for the snake's head
 snake_food =Tile(10* TILE_SIZE, 10*TILE_SIZE) 
@@ -67,6 +49,16 @@ game_score = 0
 
 #game paused feature
 game_paused = False
+
+#game menu
+def game_start():
+    global game_over, game_paused, game_score, snake, snake_food, snake_body, snake_vel_x, snake_vel_y
+    game_window.withdraw
+    game_window.deiconify
+    draw()
+
+def game_quit():
+    game_window.quit
 
 def pause_toggle(e):
     global game_paused
