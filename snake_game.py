@@ -13,13 +13,26 @@ class Tile:
     def __init__(self, x, y):
         self.x = x
         self.y = y
+#game menu
+def game_start():
+    global game_over, game_paused, game_score, snake, snake_food, snake_body, snake_vel_x, snake_vel_y
+    game_over = False
+    game_paused = False
+    game_score = 0
+    snake = Tile(5* TILE_SIZE, 5*TILE_SIZE) #single tile for the snake's head
+    snake_food =Tile(10* TILE_SIZE, 10*TILE_SIZE) 
+    snake_body = [] #multiple snake tiles
+    snake_vel_x = 0
+    snake_vel_y = 0 
 
-#game paused feature
-game_paused = False
+    game_window.withdraw
+    game_window.deiconify
+    draw()
 
-def pause_toggle(e):
-    global game_paused
-    game_paused = not game_paused
+def game_quit():
+    game_window.quit
+
+
 
 
 #game window 
@@ -51,6 +64,13 @@ snake_vel_x = 0
 snake_vel_y = 0
 game_over = False
 game_score = 0
+
+#game paused feature
+game_paused = False
+
+def pause_toggle(e):
+    global game_paused
+    game_paused = not game_paused
 
 #control binds
 def change_direction(e): #e = event
