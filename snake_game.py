@@ -20,7 +20,6 @@ game_window.title("Snake")
 game_window.resizable(False, False)
 
 snake_stage = tkinter.Canvas(game_window, bg = "magenta", width = WINDOW_WIDTH, height = WINDOW_HEIGHT, borderwidth = 0, highlightthickness = 0)
-snake_stage.pack()
 game_window.update()
 
 #center the game window
@@ -59,8 +58,9 @@ def game_start():
     game_score = 0
     game_paused = False
 
-    game_window.withdraw()
-    game_window.deiconify()
+    game_menu.pack_forget()
+    snake_stage.pack()
+
     draw()
 
 def game_quit():
@@ -68,14 +68,16 @@ def game_quit():
 
 game_menu = tkinter.Frame(game_window)
 
-title_label = tkinter.Label(game_menu, text="Snake Game", font=("Helvetica", 30, "bold"))
-title_label.pack(pady=20)
+menu_title = tkinter.Label(game_menu, text="Snake Game", font=("Helvetica", 30, "bold"))
+menu_title.pack(pady=20)
 
 play_button = tkinter.Button(game_menu, text="Play", font=("Helvetica", 20), command=game_start)
 play_button.pack(pady=10)
 
 quit_button = tkinter.Button(game_menu, text="Quit", font=("Helvetica", 20), command=game_quit)
-quit_button.pack(pady=10)
+quit_button.pack()
+
+game_menu.pack()
 
 def pause_toggle(e):
     global game_paused
@@ -144,6 +146,11 @@ def draw():
         snake_stage.create_text(WINDOW_WIDTH/2, WINDOW_HEIGHT/2, font = ('Helvetica','30','bold'), text = "PAUSED", fill = "black")
         game_window.after(100, draw)
         return
+    
+    if (game_over):
+        snake_stage.create_text(WINDOW_WIDTH/2, WINDOW_HEIGHT/2, font = ('Helvetica','30','bold'), text = f"GAME OVER: {game_score}", fill = "black" )
+        game_window.after(1000, lambda: game_menu.pack())
+        return
 
     move()
 
@@ -158,14 +165,10 @@ def draw():
     for tile in snake_body:
         snake_stage.create_rectangle(tile.x, tile.y, tile.x + TILE_SIZE, tile.y + TILE_SIZE, fill = "cyan")
 
-    if (game_over):
-        snake_stage.create_text(WINDOW_WIDTH/2, WINDOW_HEIGHT/2, font = ('Helvetica','30','bold'), text = f"GAME OVER: {game_score}", fill = "black" )
     else:
         snake_stage.create_text(30, 20, font = "Arial 10", text = f"Score: {game_score}", fill = "black")
 
     game_window.after(100, draw) #100ms = 1/10 second, 10 frames/second
-
-draw()    
 
 game_window.bind("<KeyRelease>", change_direction)
 game_window.bind("<p>",pause_toggle)
