@@ -177,22 +177,6 @@ def move():
     snake.y += snake_vel_y * TILE_SIZE
 
 
-def draw_game_over():
-    snake_stage.create_text(WINDOW_WIDTH/2, WINDOW_HEIGHT/2, font = game_font_large, text = f"GAME OVER: {game_score}", fill = "black" )
-    snake_stage.create_text(WINDOW_WIDTH/2, WINDOW_HEIGHT/2 + 60, font =game_font_small, text = "Press Space to retutn to the menu", fill = "black")
-
-    spacebar_w = 200
-    spacebar_h = 40
-    spacebar_x1 = (WINDOW_WIDTH / 2) - (spacebar_w / 2) 
-    spacebar_y1 = (WINDOW_HEIGHT / 2) + 80 
-    spacebar_x2 = spacebar_x1 + spacebar_w
-    spacebar_y2 = spacebar_y1 + spacebar_h
-
-    snake_stage.create_rectangle(spacebar_x1, spacebar_y1, spacebar_x2, spacebar_y2, fill="#D3D3D3", outline="black")
-    snake_stage.create_text(WINDOW_WIDTH / 2, spacebar_y1 + (spacebar_h / 2), font=game_font_medium, text="SPACE", fill="black")  
-    game_window.after(100, draw)
-    return
-
 def draw():
     global snake, snake_food, snake_body, game_over, game_score
     
@@ -202,9 +186,22 @@ def draw():
         return
     
     if game_over:
-        draw_game_over()
+
+        snake_stage.create_text(WINDOW_WIDTH/2, WINDOW_HEIGHT/2, font = game_font_large, text = f"GAME OVER: {game_score}", fill = "black" )
+        snake_stage.create_text(WINDOW_WIDTH/2, WINDOW_HEIGHT/2 + 60, font =game_font_small, text = "Press Space to retutn to the menu", fill = "black")
+
+        spacebar_w = 200
+        spacebar_h = 40
+        spacebar_x1 = (WINDOW_WIDTH / 2) - (spacebar_w / 2) 
+        spacebar_y1 = (WINDOW_HEIGHT / 2) + 80 
+        spacebar_x2 = spacebar_x1 + spacebar_w
+        spacebar_y2 = spacebar_y1 + spacebar_h
+
+        snake_stage.create_rectangle(spacebar_x1, spacebar_y1, spacebar_x2, spacebar_y2, fill="#D3D3D3", outline="black")
+        snake_stage.create_text(WINDOW_WIDTH / 2, spacebar_y1 + (spacebar_h / 2), font=game_font_medium, text="SPACE", fill="black")  
         game_window.after(100, draw)
         return
+            
     
     move()
 
