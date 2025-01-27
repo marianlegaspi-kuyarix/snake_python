@@ -17,7 +17,7 @@ class Tile:
 
 #game window 
 game_window = tkinter.Tk()
-game_window.title("SNAKE OP")
+game_window.title("SNAKE_OP")
 game_window.resizable(False, False)
 
 game_window.geometry(f"{WINDOW_WIDTH}x{WINDOW_HEIGHT}")
@@ -25,8 +25,10 @@ game_window.geometry(f"{WINDOW_WIDTH}x{WINDOW_HEIGHT}")
 snake_stage = tkinter.Canvas(game_window, bg = "magenta", width = WINDOW_WIDTH, height = WINDOW_HEIGHT, borderwidth = 0, highlightthickness = 0)
 
 #game font
-game_font = font.Font(family= "Daydream", size=30, weight="bold")
-
+game_font_title = font.Font(family= "Daydream", size=30, weight="bold")
+game_font_large = font.Font(family= "Pixelify Sans SemiBold", size=40)
+game_font_medium = font.Font(family= "Pixelify Sans", size=20, weight="bold")
+game_font_small = font.Font(family="Pixelify Sans Medium", size=15, weight="bold")
 
 #center the game window
 def center_window():
@@ -56,7 +58,7 @@ game_paused = False
 #game menu
 game_menu = tkinter.Frame(game_window)
 
-menu_title = tkinter.Label(game_menu, text="SNAKE GAME\nON\nPYTHON", font=game_font)
+menu_title = tkinter.Label(game_menu, text="SNAKE GAME\nON\nPYTHON", font=game_font_title)
 menu_title.pack(pady=20)
 
 def game_start():
@@ -81,10 +83,10 @@ def game_start():
 def game_quit():
     game_window.quit()
 
-play_button = tkinter.Button(game_menu, text="Play", font=("Helvetica", 20), command=game_start)
+play_button = tkinter.Button(game_menu, text="Play", font=game_font_medium, command=game_start)
 play_button.pack(pady=10)
 
-quit_button = tkinter.Button(game_menu, text="Quit", font=("Helvetica", 20), command=game_quit)
+quit_button = tkinter.Button(game_menu, text="Quit", font=game_font_medium, command=game_quit)
 quit_button.pack()
 
 
@@ -156,12 +158,12 @@ def draw():
     global snake, snake_food, snake_body, game_over, game_score
     
     if game_paused:
-        snake_stage.create_text(WINDOW_WIDTH/2, WINDOW_HEIGHT/2, font = ('Helvetica','30','bold'), text = "PAUSED", fill = "black")
+        snake_stage.create_text(WINDOW_WIDTH/2, WINDOW_HEIGHT/2, font = game_font_large, text = "PAUSED", fill = "black")
         game_window.after(100, draw)
         return
     
     if (game_over):
-        snake_stage.create_text(WINDOW_WIDTH/2, WINDOW_HEIGHT/2, font = ('Helvetica','30','bold'), text = f"GAME OVER: {game_score}", fill = "black" )
+        snake_stage.create_text(WINDOW_WIDTH/2, WINDOW_HEIGHT/2, font = game_font_large, text = f"GAME OVER: {game_score}", fill = "black" )
         game_window.after(1000, lambda: show_game_menu())
         return
 
@@ -179,7 +181,7 @@ def draw():
         snake_stage.create_rectangle(tile.x, tile.y, tile.x + TILE_SIZE, tile.y + TILE_SIZE, fill = "cyan")
 
     else:
-        snake_stage.create_text(30, 20, font = "Arial 10", text = f"Score: {game_score}", fill = "black")
+        snake_stage.create_text(45, 20, font = game_font_small, text = f"Score: {game_score}", fill = "black")
 
     game_window.after(100, draw) #100ms = 1/10 second, 10 frames/second
 
