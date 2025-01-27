@@ -56,7 +56,7 @@ game_paused = False
 #game menu
 game_menu = tkinter.Frame(game_window)
 
-menu_title = tkinter.Label(game_menu, text="SNAKE GAME ON PYTHON", font=game_font)
+menu_title = tkinter.Label(game_menu, text="SNAKE GAME\nON\nPYTHON", font=game_font)
 menu_title.pack(pady=20)
 
 def game_start():
