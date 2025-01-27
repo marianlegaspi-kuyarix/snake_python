@@ -176,13 +176,17 @@ def move():
     snake.x += snake_vel_x * TILE_SIZE
     snake.y += snake_vel_y * TILE_SIZE
 
+draw_after_id = None
 
 def draw():
-    global snake, snake_food, snake_body, game_over, game_score
+    global snake, snake_food, snake_body, game_over, game_score, draw_after_id
     
     if game_paused:
         snake_stage.create_text(WINDOW_WIDTH/2, WINDOW_HEIGHT/2, font = game_font_large, text = "PAUSED", fill = "black")
-        game_window.after(100, draw)
+
+        if draw_after_id:
+            game_window.after_cancel(draw_after_id) 
+        draw_after_id = game_window.after(100, draw)
         return
     
     if game_over:
@@ -196,12 +200,14 @@ def draw():
         spacebar_y1 = (WINDOW_HEIGHT / 2) + 80 
         spacebar_x2 = spacebar_x1 + spacebar_w
         spacebar_y2 = spacebar_y1 + spacebar_h
-
+        
         snake_stage.create_rectangle(spacebar_x1, spacebar_y1, spacebar_x2, spacebar_y2, fill="#D3D3D3", outline="black")
-        snake_stage.create_text(WINDOW_WIDTH / 2, spacebar_y1 + (spacebar_h / 2), font=game_font_medium, text="SPACE", fill="black")  
-        game_window.after(100, draw)
-        return
-            
+        snake_stage.create_text(WINDOW_WIDTH / 2, spacebar_y1 + (spacebar_h / 2), font=game_font_medium, text="SPACE", fill="black") 
+
+        if draw_after_id:
+            game_window.after_cancel(draw_after_id) 
+        draw_after_id = game_window.after(100, draw)
+        return 
     
     move()
 
@@ -216,10 +222,12 @@ def draw():
     for tile in snake_body:
         snake_stage.create_rectangle(tile.x, tile.y, tile.x + TILE_SIZE, tile.y + TILE_SIZE, fill = "cyan")
 
-    else:
-        snake_stage.create_text(45, 20, font = game_font_small, text = f"Score: {game_score}", fill = "black")
+    snake_stage.create_text(45, 20, font=game_font_small, text=f"Score: {game_score}", fill="black")
 
-    game_window.after(100, draw) #100ms = 1/10 second, 10 frames/second
+    if draw_after_id:
+        game_window.after_cancel(draw_after_id)
+    draw_after_id = game_window.after(100, draw)
+    return
 
 def show_game_menu():
     snake_stage.pack_forget()
