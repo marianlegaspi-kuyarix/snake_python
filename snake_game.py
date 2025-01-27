@@ -1,5 +1,6 @@
 #starting the modification of the program
 import tkinter 
+from tkinter import font
 import random
 
 ROWS = 25
@@ -16,12 +17,16 @@ class Tile:
 
 #game window 
 game_window = tkinter.Tk()
-game_window.title("Snake")
+game_window.title("SNAKE OP")
 game_window.resizable(False, False)
 
 game_window.geometry(f"{WINDOW_WIDTH}x{WINDOW_HEIGHT}")
 
 snake_stage = tkinter.Canvas(game_window, bg = "magenta", width = WINDOW_WIDTH, height = WINDOW_HEIGHT, borderwidth = 0, highlightthickness = 0)
+
+#game font
+game_font = font.Font(family= "Daydream", size=30, weight="bold")
+
 
 #center the game window
 def center_window():
@@ -51,7 +56,7 @@ game_paused = False
 #game menu
 game_menu = tkinter.Frame(game_window)
 
-menu_title = tkinter.Label(game_menu, text="Snake Game", font=("Helvetica", 30, "bold"))
+menu_title = tkinter.Label(game_menu, text="SNAKE GAME ON PYTHON", font=game_font)
 menu_title.pack(pady=20)
 
 def game_start():
@@ -157,7 +162,7 @@ def draw():
     
     if (game_over):
         snake_stage.create_text(WINDOW_WIDTH/2, WINDOW_HEIGHT/2, font = ('Helvetica','30','bold'), text = f"GAME OVER: {game_score}", fill = "black" )
-        game_window.after(2000, lambda: show_game_menu())
+        game_window.after(1000, lambda: show_game_menu())
         return
 
     move()
