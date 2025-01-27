@@ -83,10 +83,27 @@ def game_start():
 def game_quit():
     game_window.quit()
 
-play_button = tkinter.Button(game_menu, text="Play", font=game_font_medium, command=game_start)
-play_button.pack(pady=10)
+#game menu buttons
+def on_enter_play(button):
+    button.config(bg="#abebc6")#lighter
 
-quit_button = tkinter.Button(game_menu, text="Quit", font=game_font_medium, command=game_quit)
+def on_leave_play(button):
+    button.config(bg="#58d68d")
+
+def on_enter_quit(button):
+    button.config(bg="#f1948a")#lighter
+
+def on_leave_quit(button):
+    button.config(bg="#e74c3c")
+
+play_button = tkinter.Button(game_menu, text="Play", font=game_font_medium, bg="#58d68d", fg="white", command=game_start,  padx=30, pady=10)
+play_button.bind("<Enter>", lambda e: on_enter_play(play_button))
+play_button.bind("<Leave>", lambda e: on_leave_play(play_button))
+play_button.pack(pady=30)
+
+quit_button = tkinter.Button(game_menu, text="Quit", font=game_font_medium, bg="#e74c3c", fg="white", command=game_quit, padx=30, pady=10)
+quit_button.bind("<Enter>", lambda e: on_enter_quit(quit_button))
+quit_button.bind("<Leave>", lambda e: on_leave_quit(quit_button))
 quit_button.pack()
 
 
