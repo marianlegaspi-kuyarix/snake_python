@@ -114,7 +114,12 @@ center_window()
 def pause_toggle(e):
     global game_paused
     game_paused = not game_paused
-    
+
+def spacebar_press(e):
+    global game_over
+    if game_over:
+        show_game_menu()
+
 #control binds
 def change_direction(e): #e = event
     #print(e)
@@ -171,6 +176,23 @@ def move():
     snake.x += snake_vel_x * TILE_SIZE
     snake.y += snake_vel_y * TILE_SIZE
 
+
+def draw_game_over():
+    snake_stage.create_text(WINDOW_WIDTH/2, WINDOW_HEIGHT/2, font = game_font_large, text = f"GAME OVER: {game_score}", fill = "black" )
+    snake_stage.create_text(WINDOW_WIDTH/2, WINDOW_HEIGHT/2 + 60, font =game_font_small, text = "Press Space to retutn to the menu", fill = "black")
+
+    spacebar_w = 200
+    spacebar_h = 40
+    spacebar_x1 = (WINDOW_WIDTH / 2) - (spacebar_w / 2) 
+    spacebar_y1 = (WINDOW_HEIGHT / 2) + 80 
+    spacebar_x2 = spacebar_x1 + spacebar_w
+    spacebar_y2 = spacebar_y1 + spacebar_h
+
+    snake_stage.create_rectangle(spacebar_x1, spacebar_y1, spacebar_x2, spacebar_y2, fill="#D3D3D3", outline="black")
+    snake_stage.create_text(WINDOW_WIDTH / 2, spacebar_y1 + (spacebar_h / 2), font=game_font_medium, text="SPACE", fill="black")  
+    game_window.after(100, draw)
+    return
+
 def draw():
     global snake, snake_food, snake_body, game_over, game_score
     
@@ -179,11 +201,11 @@ def draw():
         game_window.after(100, draw)
         return
     
-    if (game_over):
-        snake_stage.create_text(WINDOW_WIDTH/2, WINDOW_HEIGHT/2, font = game_font_large, text = f"GAME OVER: {game_score}", fill = "black" )
-        game_window.after(1000, lambda: show_game_menu())
+    if game_over:
+        draw_game_over()
+        game_window.after(100, draw)
         return
-
+    
     move()
 
     snake_stage.delete("all")
@@ -210,4 +232,5 @@ def show_game_menu():
 
 game_window.bind("<KeyRelease>", change_direction)
 game_window.bind("<p>",pause_toggle)
+game_window.bind("<space>",spacebar_press)
 game_window.mainloop()
