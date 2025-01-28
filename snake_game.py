@@ -1,5 +1,6 @@
 #starting the modification of the program
 import tkinter 
+from PIL import Image, ImageTk
 from tkinter import font
 import random
 
@@ -55,11 +56,26 @@ game_score = 0
 #game paused feature
 game_paused = False
 
-#game menu
+#game menu 
 game_menu = tkinter.Frame(game_window)
-
 menu_title = tkinter.Label(game_menu, text="SNAKE GAME\nON\nPYTHON", font=game_font_title)
 menu_title.pack(pady=20)
+
+game_menu_background = None
+
+def game_menu_bg_pic():
+    global game_menu_background
+    game_img = Image.open("C:\\Users\\Ian\\snake\\game_menu.png")
+    game_img = game_img.resize((WINDOW_WIDTH, WINDOW_HEIGHT), Image.LANCZOS)
+    game_menu_background = ImageTk.PhotoImage(game_img)
+
+def setup_game_menu_with_background():
+    global game_menu_background
+    background_label = tkinter.Label(game_menu, image=game_menu_background)
+    background_label.place(x=0, y=0, relwidth=1, relheight=1)
+
+game_menu_bg_pic()
+setup_game_menu_with_background()
 
 def game_start():
     global game_over, game_paused, game_score, snake, snake_food, snake_body, snake_vel_x, snake_vel_y
