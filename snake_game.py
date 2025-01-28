@@ -68,9 +68,6 @@ game_menu.create_text(WINDOW_WIDTH / 2, 100, text="SNAKE GAME", font=game_font_t
 game_menu.create_text(WINDOW_WIDTH / 2, 150, text="ON", font=game_font_title, fill="#ffffff", anchor="center")
 game_menu.create_text(WINDOW_WIDTH / 2, 200, text="PYTHON", font=game_font_title, fill="#ffffff", anchor="center")
 
-button_pos = tkinter.Frame(game_menu)
-button_pos.place(relx=0.5, rely=0.5, anchor="center")
-
 def game_start():
     global game_over, game_paused, game_score, snake, snake_food, snake_body, snake_vel_x, snake_vel_y
     snake = Tile(5* TILE_SIZE, 5*TILE_SIZE) #single tile for the snake's head
@@ -106,15 +103,15 @@ def on_enter_quit(button):
 def on_leave_quit(button):
     button.config(bg="#e74c3c")
 
-play_button = tkinter.Button(button_pos, text="Play", font=game_font_medium, bg="#58d68d", fg="white", command=game_start,  padx=30, pady=10)
+play_button = tkinter.Button(game_menu, text="Play", font=game_font_medium, bg="#58d68d", fg="white", command=game_start,  padx=30, pady=10)
 play_button.bind("<Enter>", lambda e: on_enter_play(play_button))
 play_button.bind("<Leave>", lambda e: on_leave_play(play_button))
-play_button.pack()
+play_button.place(relx=0.5, rely=0.435, anchor="center")
 
-quit_button = tkinter.Button(button_pos, text="Quit", font=game_font_medium, bg="#e74c3c", fg="white", command=game_quit, padx=30, pady=10)
+quit_button = tkinter.Button(game_menu, text="Quit", font=game_font_medium, bg="#e74c3c", fg="white", command=game_quit, padx=30, pady=10)
 quit_button.bind("<Enter>", lambda e: on_enter_quit(quit_button))
 quit_button.bind("<Leave>", lambda e: on_leave_quit(quit_button))
-quit_button.pack()
+quit_button.place(relx=0.5, rely=0.57, anchor="center")
 
 game_menu.pack(fill="both", expand=True)
 game_window.update()
