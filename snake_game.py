@@ -57,7 +57,7 @@ game_score = 0
 game_paused = False
 
 #game menu 
-game_img = Image.open("C:\\Users\\Ian\\snake\\game_menu.png")
+game_img = Image.open("C:\\Users\\Ian\\snake\\game_related\\game_menu.png")
 game_img = game_img.resize((WINDOW_WIDTH, WINDOW_HEIGHT))
 game_menu_bg = ImageTk.PhotoImage(game_img)
 
