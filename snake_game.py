@@ -23,7 +23,7 @@ game_window.resizable(False, False)
 
 game_window.geometry(f"{WINDOW_WIDTH}x{WINDOW_HEIGHT}")
 
-snake_stage = tkinter.Canvas(game_window, bg = "magenta", width = WINDOW_WIDTH, height = WINDOW_HEIGHT, borderwidth = 0, highlightthickness = 0)
+snake_stage = tkinter.Canvas(game_window, bg = "#58d68d", width = WINDOW_WIDTH, height = WINDOW_HEIGHT, borderwidth = 0, highlightthickness = 0)
 
 #game font
 game_font_title = font.Font(family= "Daydream", size=30, weight="bold")
@@ -57,23 +57,19 @@ game_score = 0
 game_paused = False
 
 #game menu 
-
-
-
 game_img = Image.open("C:\\Users\\Ian\\snake\\game_menu.png")
-game_img = game_img.resize((WINDOW_WIDTH, WINDOW_HEIGHT), Image.LANCZOS)
+game_img = game_img.resize((WINDOW_WIDTH, WINDOW_HEIGHT))
 game_menu_bg = ImageTk.PhotoImage(game_img)
 
-game_menu_bg_label = tkinter.Label(game_window, image=game_menu_bg)
-game_menu_bg_label.place(x=0, y=0)
+game_menu = tkinter.Canvas(game_window, width=WINDOW_WIDTH, height=WINDOW_HEIGHT)
+game_menu.create_image(0, 0, anchor="nw", image=game_menu_bg)
 
-game_menu = tkinter.Frame(game_window)
-game_menu.place(relx=0.5, rely=0.5, anchor="center")
+game_menu.create_text(WINDOW_WIDTH / 2, 100, text="SNAKE GAME", font=game_font_title, fill="#ffffff", anchor="center")
+game_menu.create_text(WINDOW_WIDTH / 2, 150, text="ON", font=game_font_title, fill="#ffffff", anchor="center")
+game_menu.create_text(WINDOW_WIDTH / 2, 200, text="PYTHON", font=game_font_title, fill="#ffffff", anchor="center")
 
-#game menu title
-menu_title = tkinter.Label(game_menu, text="SNAKE GAME\nON\nPYTHON", font=game_font_title)
-menu_title.pack(pady=20)
-
+button_pos = tkinter.Frame(game_menu)
+button_pos.place(relx=0.5, rely=0.5, anchor="center")
 
 def game_start():
     global game_over, game_paused, game_score, snake, snake_food, snake_body, snake_vel_x, snake_vel_y
@@ -110,17 +106,17 @@ def on_enter_quit(button):
 def on_leave_quit(button):
     button.config(bg="#e74c3c")
 
-play_button = tkinter.Button(game_menu, text="Play", font=game_font_medium, bg="#58d68d", fg="white", command=game_start,  padx=30, pady=10)
+play_button = tkinter.Button(button_pos, text="Play", font=game_font_medium, bg="#58d68d", fg="white", command=game_start,  padx=30, pady=10)
 play_button.bind("<Enter>", lambda e: on_enter_play(play_button))
 play_button.bind("<Leave>", lambda e: on_leave_play(play_button))
-play_button.pack(pady=30)
+play_button.pack()
 
-quit_button = tkinter.Button(game_menu, text="Quit", font=game_font_medium, bg="#e74c3c", fg="white", command=game_quit, padx=30, pady=10)
+quit_button = tkinter.Button(button_pos, text="Quit", font=game_font_medium, bg="#e74c3c", fg="white", command=game_quit, padx=30, pady=10)
 quit_button.bind("<Enter>", lambda e: on_enter_quit(quit_button))
 quit_button.bind("<Leave>", lambda e: on_leave_quit(quit_button))
 quit_button.pack()
 
-game_menu.pack()
+game_menu.pack(fill="both", expand=True)
 game_window.update()
 center_window()
 
@@ -227,13 +223,13 @@ def draw():
     snake_stage.delete("all")
 
     #draw the snake's food
-    snake_stage.create_rectangle(snake_food.x, snake_food.y, snake_food.x + TILE_SIZE, snake_food.y + TILE_SIZE, fill = "yellow")
+    snake_stage.create_rectangle(snake_food.x, snake_food.y, snake_food.x + TILE_SIZE, snake_food.y + TILE_SIZE, fill = "#ec7063")
 
     #draw the snake
     snake_stage.create_rectangle(snake.x, snake.y, snake.x + TILE_SIZE, snake.y + TILE_SIZE, fill = "cyan")
 
     for tile in snake_body:
-        snake_stage.create_rectangle(tile.x, tile.y, tile.x + TILE_SIZE, tile.y + TILE_SIZE, fill = "cyan")
+        snake_stage.create_rectangle(tile.x, tile.y, tile.x + TILE_SIZE, tile.y + TILE_SIZE, fill = "#3498db")
 
     snake_stage.create_text(45, 20, font=game_font_small, text=f"Score: {game_score}", fill="black")
 
